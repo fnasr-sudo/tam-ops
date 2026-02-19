@@ -7,7 +7,7 @@
 <style>
   :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #e6edf3; --dim: #8b949e; --green: #3fb950; --red: #f85149; --blue: #58a6ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 40px; -webkit-font-smoothing: antialiased; }
+  body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 80px; -webkit-font-smoothing: antialiased; }
   
   .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
   .header h1 { font-size: 18px; font-weight: 700; }
@@ -17,8 +17,17 @@
 
   .container { max-width: 800px; margin: 0 auto; padding: 16px; }
 
+  /* Navigation Tabs */
+  .tabs { display: flex; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 53px; z-index: 90; overflow-x: auto; }
+  .tab { flex: 1; text-align: center; padding: 12px; font-size: 13px; color: var(--dim); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+  .tab.active { color: var(--text); border-bottom-color: var(--green); font-weight: 600; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.2s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
   /* Stats Grid */
-  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; margin-top: 16px; }
   .stat-card { background: var(--card); border: 1px solid var(--border); padding: 12px; border-radius: 8px; }
   .stat-label { font-size: 10px; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; letter-spacing: 0.5px; }
   .stat-val { font-size: 18px; font-weight: 700; }
@@ -26,7 +35,6 @@
 
   /* Setup Card */
   .setup-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
-  
   .setup-header { padding: 12px 16px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
   .pair-name { font-size: 16px; font-weight: 700; }
   .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase; margin-left: 8px; }
@@ -35,25 +43,28 @@
   .bg-blue { background: rgba(88,166,255,0.15); color: var(--blue); }
 
   .setup-body { padding: 16px; }
-  
   .setup-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
   .meta-item label { font-size: 10px; color: var(--dim); display: block; margin-bottom: 2px; text-transform: uppercase; }
   .meta-item val { font-size: 14px; font-weight: 600; }
 
-  /* Grid List (Mobile Friendly) */
+  /* Grid List */
   .grid-list { list-style: none; }
   .grid-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .grid-item:last-child { border-bottom: none; }
-  
   .grid-left { display: flex; flex-direction: column; gap: 2px; }
   .level-name { font-size: 13px; font-weight: 600; color: var(--blue); }
   .level-detail { font-size: 11px; color: var(--dim); }
-  
   .grid-right { text-align: right; }
   .profit-val { font-size: 13px; font-weight: 600; color: var(--green); font-family: monospace; }
   .status-badge { font-size: 9px; padding: 2px 5px; background: rgba(255,255,255,0.1); border-radius: 3px; color: var(--dim); margin-top: 2px; display: inline-block; }
-
   .total-row { display: flex; justify-content: space-between; padding-top: 12px; margin-top: 8px; border-top: 1px dashed var(--border); font-weight: 600; font-size: 13px; }
+
+  /* Empty State */
+  .empty-state { padding: 40px; text-align: center; color: var(--dim); font-size: 13px; }
+
+  /* Strategy Card */
+  .strategy-desc { font-size: 14px; line-height: 1.5; color: var(--dim); margin-bottom: 16px; }
+  .strategy-rules li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; gap: 8px; }
 </style>
 </head>
 <body>
@@ -63,27 +74,62 @@
   <div class="live-indicator"><div class="dot"></div> LIVE</div>
 </div>
 
+<div class="tabs">
+  <div class="tab active" data-tab="dashboard">Dashboard</div>
+  <div class="tab" data-tab="history">History</div>
+  <div class="tab" data-tab="strategies">Strategies</div>
+</div>
+
 <div class="container">
   
-  <!-- Top Stats -->
-  <div class="stats">
-    <div class="stat-card">
-      <div class="stat-label">Realized P&L</div>
-      <div class="stat-val" id="daily-pnl">$0.00</div>
+  <!-- DASHBOARD -->
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Realized P&L</div>
+        <div class="stat-val" id="daily-pnl">$0.00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Potential</div>
+        <div class="stat-val green" id="potential-pnl">$0.00</div>
+      </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Potential</div>
-      <div class="stat-val green" id="potential-pnl">$0.00</div>
-    </div>
+    <div id="setups-container"></div>
   </div>
 
-  <div id="setups-container">
-    <!-- Setups injected here -->
+  <!-- HISTORY -->
+  <div id="tab-history" class="tab-content">
+    <div class="empty-state">No history available yet.</div>
+  </div>
+
+  <!-- STRATEGIES -->
+  <div id="tab-strategies" class="tab-content">
+    <div class="setup-card">
+      <div class="setup-header"><span class="pair-name">Echo Strategy</span></div>
+      <div class="setup-body">
+        <div class="strategy-desc">Price echoes back to its origin. Laddered entries around the impulse start level.</div>
+        <ul class="strategy-rules" style="list-style:none">
+          <li><span>🎯</span> TP: Laddered (+6, +8, +12 pips)</li>
+          <li><span>🛡️</span> SL: Soft stop (monitor)</li>
+          <li><span>⏰</span> Swap: Close all before rollover</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
 </div>
 
 <script>
+// Tab Switching
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('tab-' + t.dataset.tab).classList.add('active');
+  });
+});
+
 async function loadData() {
   try {
     const res = await fetch('trades.json?t=' + Date.now());
@@ -96,7 +142,6 @@ function render(data) {
   // Stats
   document.getElementById('daily-pnl').textContent = `$${(data.stats.dailyPnl || 0).toFixed(2)}`;
   document.getElementById('daily-pnl').className = `stat-val ${data.stats.dailyPnl >= 0 ? 'green' : 'red'}`;
-  
   document.getElementById('potential-pnl').textContent = `$${(data.stats.potentialPnl || 0).toFixed(2)}`;
   
   // Setups
@@ -104,14 +149,14 @@ function render(data) {
   container.innerHTML = '';
 
   if (!data.setups || data.setups.length === 0) {
-    container.innerHTML = '<div style="padding:40px; text-align:center; color:#8b949e; font-size:13px;">No active operations.</div>';
+    container.innerHTML = '<div class="empty-state">No active operations.</div>';
     return;
   }
 
   data.setups.forEach(setup => {
     const dirClass = setup.direction === 'BUY' ? 'bg-green' : 'bg-red';
     
-    // Mobile Grid List HTML
+    // Grid List
     const levelsHtml = setup.levels.map(lvl => `
       <li class="grid-item">
         <div class="grid-left">
@@ -158,7 +203,6 @@ function render(data) {
   });
 }
 
-// Auto-refresh
 loadData();
 setInterval(loadData, 10000);
 </script>
