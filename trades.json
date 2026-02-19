@@ -1,5 +1,11 @@
 {
-  "updatedAt": "2026-02-19T14:30:00Z",
+  "updatedAt": "2026-02-19T14:45:00Z",
+  "stats": {
+    "dailyPnl": 0.00,
+    "openPnl": 0.00,
+    "potentialPnl": 6.40,
+    "winRate": 0
+  },
   "setups": [
     {
       "id": "echo-fiber-20260219",
@@ -11,14 +17,14 @@
       "baseLot": "0.08",
       "probability": "Hot",
       "status": "Pending",
-      "filledPct": 0,
-      "pnl": 0,
-      "time": "13:48 UTC",
-      "orders": [
-        { "level": "Origin", "price": 1.18029, "vol": 0.02, "status": "Pending" },
-        { "level": "+3 pips", "price": 1.18059, "vol": 0.03, "status": "Pending" },
-        { "level": "+6 pips", "price": 1.18089, "vol": 0.02, "status": "Pending" },
-        { "level": "+10 pips", "price": 1.18129, "vol": 0.01, "status": "Pending" }
+      "currentPrice": "1.17792",
+      "distanceToOrigin": "+23.7 pips",
+      "totalExpectedProfit": 6.40,
+      "levels": [
+        { "name": "Origin", "price": 1.18029, "vol": 0.02, "tp": 1.17949, "status": "Pending", "expectedProfit": 1.60, "realizedPnl": 0 },
+        { "name": "+3 pips", "price": 1.18059, "vol": 0.03, "tp": 1.17979, "status": "Pending", "expectedProfit": 2.40, "realizedPnl": 0 },
+        { "name": "+6 pips", "price": 1.18089, "vol": 0.02, "tp": 1.18009, "status": "Pending", "expectedProfit": 1.60, "realizedPnl": 0 },
+        { "name": "+10 pips", "price": 1.18129, "vol": 0.01, "tp": 1.18049, "status": "Pending", "expectedProfit": 0.80, "realizedPnl": 0 }
       ]
     }
   ],

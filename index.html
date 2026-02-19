@@ -3,416 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tam Ops — Trade Command Center</title>
+<title>Tam Ops — Command Center</title>
 <style>
-  :root {
-    --bg: #0d1117;
-    --card: #161b22;
-    --border: #30363d;
-    --text: #e6edf3;
-    --text-dim: #8b949e;
-    --green: #3fb950;
-    --green-bg: rgba(63,185,80,0.15);
-    --red: #f85149;
-    --red-bg: rgba(248,81,73,0.15);
-    --blue: #58a6ff;
-    --blue-bg: rgba(88,166,255,0.15);
-    --yellow: #d29922;
-    --yellow-bg: rgba(210,153,34,0.15);
-    --purple: #bc8cff;
-  }
+  :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #e6edf3; --dim: #8b949e; --green: #3fb950; --red: #f85149; --blue: #58a6ff; --yellow: #d29922; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-  /* Header */
-  .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 40px; }
+  
+  .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 20px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
   .header h1 { font-size: 20px; font-weight: 700; }
-  .header h1 span { color: var(--green); }
-  .header-right { display: flex; align-items: center; gap: 12px; }
-  .live-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .date-display { color: var(--text-dim); font-size: 13px; }
+  .live-indicator { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--green); }
+  .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-  /* Tabs */
-  .tabs { display: flex; gap: 0; background: var(--card); border-bottom: 1px solid var(--border); overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .tab { padding: 12px 20px; font-size: 14px; color: var(--text-dim); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
-  .tab.active { color: var(--text); border-bottom-color: var(--green); }
-  .tab:hover { color: var(--text); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-  /* Content */
-  .content { max-width: 1200px; margin: 0 auto; padding: 20px; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+  /* Stats Grid */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 16px; border-radius: 8px; }
+  .stat-label { font-size: 11px; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
+  .stat-val { font-size: 24px; font-weight: 700; }
+  .green { color: var(--green); } .red { color: var(--red); } .blue { color: var(--blue); } .yellow { color: var(--yellow); }
 
-  /* Stats Row */
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
-  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
-  .stat-label { font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.5px; margin-bottom: 4px; }
-  .stat-value { font-size: 24px; font-weight: 700; }
-  .stat-value.green { color: var(--green); }
-  .stat-value.red { color: var(--red); }
-  .stat-value.blue { color: var(--blue); }
-  .stat-value.yellow { color: var(--yellow); }
-
-  /* Trade Cards */
+  /* Active Setups */
   .section-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-  .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
-  .badge-hot { background: var(--red-bg); color: var(--red); }
-  .badge-warm { background: var(--yellow-bg); color: var(--yellow); }
-  .badge-buy { background: var(--green-bg); color: var(--green); }
-  .badge-sell { background: var(--red-bg); color: var(--red); }
-  .badge-pending { background: var(--blue-bg); color: var(--blue); }
-  .badge-filling { background: var(--yellow-bg); color: var(--yellow); }
-  .badge-filled { background: var(--green-bg); color: var(--green); }
-  .badge-closed { background: rgba(139,148,158,0.15); color: var(--text-dim); }
+  .setup-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .setup-header { padding: 16px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .pair-info { display: flex; align-items: center; gap: 12px; }
+  .pair-name { font-size: 18px; font-weight: 700; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; text-transform: uppercase; }
+  .bg-green { background: rgba(63,185,80,0.15); color: var(--green); }
+  .bg-red { background: rgba(248,81,73,0.15); color: var(--red); }
+  .bg-blue { background: rgba(88,166,255,0.15); color: var(--blue); }
 
-  .trade-list { display: flex; flex-direction: column; gap: 12px; }
-  .trade-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: border-color 0.2s; }
-  .trade-card:hover { border-color: var(--text-dim); }
-  .trade-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-  .trade-pair { font-size: 18px; font-weight: 700; }
-  .trade-meta { display: flex; gap: 6px; flex-wrap: wrap; }
-  .trade-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
-  .trade-detail { }
-  .trade-detail-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
-  .trade-detail-value { font-size: 14px; font-weight: 600; }
+  .setup-body { padding: 16px; }
+  .setup-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .meta-item label { font-size: 11px; color: var(--dim); display: block; margin-bottom: 4px; }
+  .meta-item val { font-size: 15px; font-weight: 600; }
 
-  /* Grid Visualizer */
-  .grid-viz { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-  .grid-bar-container { display: flex; flex-direction: column; gap: 4px; }
-  .grid-bar-row { display: flex; align-items: center; gap: 8px; }
-  .grid-bar-label { width: 80px; font-size: 12px; color: var(--text-dim); text-align: right; flex-shrink: 0; }
-  .grid-bar { height: 24px; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; font-size: 11px; font-weight: 600; min-width: 30px; }
-  .grid-bar.buy { background: var(--green-bg); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
-  .grid-bar.sell { background: var(--red-bg); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
-  .origin-marker { border-left: 2px dashed var(--yellow); padding-left: 8px; }
+  /* Grid Levels Table */
+  .grid-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .grid-table th { text-align: left; color: var(--dim); padding: 8px; border-bottom: 1px solid var(--border); font-weight: 500; }
+  .grid-table td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .grid-table tr:last-child td { border-bottom: none; }
+  .level-name { font-weight: 600; color: var(--blue); }
+  .profit-col { text-align: right; font-family: monospace; font-size: 14px; }
+  .status-col { text-align: center; }
 
-  /* Strategy Info */
-  .strategy-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
-  .strategy-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-  .strategy-desc { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
-  .rule-list { list-style: none; }
-  .rule-list li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; display: flex; gap: 8px; }
-  .rule-list li:last-child { border-bottom: none; }
-  .rule-icon { flex-shrink: 0; }
-
-  /* Filter Bar */
-  .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-  .filter-btn { background: var(--card); border: 1px solid var(--border); color: var(--text-dim); padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.2s; }
-  .filter-btn.active { border-color: var(--green); color: var(--green); background: var(--green-bg); }
-  .filter-btn:hover { border-color: var(--text-dim); color: var(--text); }
-
-  /* Date Picker */
-  .date-picker { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 6px; font-size: 13px; }
-
-  /* Chart placeholder */
-  .chart-container { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; min-height: 200px; display: flex; align-items: center; justify-content: center; }
-  .chart-placeholder { color: var(--text-dim); font-size: 14px; text-align: center; }
-
-  /* Empty State */
-  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-dim); }
-  .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
-  .empty-state h3 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
-
-  /* Responsive */
+  .expected-row { background: rgba(63,185,80,0.05); font-weight: 600; }
+  
   @media (max-width: 600px) {
-    .content { padding: 12px; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .stat-card { padding: 12px; }
-    .stat-value { font-size: 20px; }
-    .trade-details { grid-template-columns: repeat(2, 1fr); }
+    .setup-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .grid-table th:nth-child(3), .grid-table td:nth-child(3) { display: none; } /* Hide TP on mobile */
   }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>📈 Tam<span>Ops</span></h1>
-  <div class="header-right">
-    <div class="live-dot"></div>
-    <div class="date-display" id="current-date"></div>
-  </div>
+  <h1>Tam<span>Ops</span> Command Center</h1>
+  <div class="live-indicator"><div class="dot"></div> LIVE</div>
 </div>
 
-<div class="tabs">
-  <div class="tab active" data-tab="dashboard">Dashboard</div>
-  <div class="tab" data-tab="trades">Active Trades</div>
-  <div class="tab" data-tab="history">History</div>
-  <div class="tab" data-tab="strategies">Strategies</div>
-</div>
-
-<div class="content">
-
-  <!-- DASHBOARD TAB -->
-  <div class="tab-content active" id="tab-dashboard">
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">Today's P&L</div>
-        <div class="stat-value green" id="stat-pnl">$0.00</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Active Setups</div>
-        <div class="stat-value blue" id="stat-active">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Orders Filled</div>
-        <div class="stat-value yellow" id="stat-filled">0</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Win Rate</div>
-        <div class="stat-value green" id="stat-winrate">—</div>
-      </div>
+<div class="container">
+  
+  <!-- Top Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">Daily Realized P&L</div>
+      <div class="stat-val" id="daily-pnl">$0.00</div>
     </div>
-
-    <div class="section-title">📊 Daily Performance</div>
-    <div class="chart-container">
-      <div class="chart-placeholder">
-        <div style="font-size: 32px; margin-bottom: 8px;">📉</div>
-        P&L chart will populate as trades are logged
-      </div>
+    <div class="stat-card">
+      <div class="stat-label">Potential Profit (Active)</div>
+      <div class="stat-val green" id="potential-pnl">$0.00</div>
     </div>
-
-    <div class="section-title">🎯 Active Setups</div>
-    <div id="dashboard-setups">
-      <div class="empty-state">
-        <div class="icon">🔍</div>
-        <h3>No active setups</h3>
-        <p>Setups will appear here when loaded via Tam</p>
-      </div>
+    <div class="stat-card">
+      <div class="stat-label">Win Rate</div>
+      <div class="stat-val yellow" id="win-rate">—</div>
     </div>
   </div>
 
-  <!-- ACTIVE TRADES TAB -->
-  <div class="tab-content" id="tab-trades">
-    <div class="filter-bar">
-      <div class="filter-btn active" data-filter="all">All</div>
-      <div class="filter-btn" data-filter="fiber">Fiber</div>
-      <div class="filter-btn" data-filter="cable">Cable</div>
-      <div class="filter-btn" data-filter="ninja">Ninja</div>
-      <div class="filter-btn" data-filter="chunnel">Chunnel</div>
-    </div>
-
-    <div class="trade-list" id="active-trades">
-      <div class="empty-state">
-        <div class="icon">📭</div>
-        <h3>No active trades</h3>
-        <p>Use "Load Echo [Pair] [Direction] [Origin] [Lot] [Probability]" to create a setup</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- HISTORY TAB -->
-  <div class="tab-content" id="tab-history">
-    <div class="filter-bar">
-      <input type="date" class="date-picker" id="history-date">
-      <div class="filter-btn active" data-filter="all">All</div>
-      <div class="filter-btn" data-filter="echo">Echo</div>
-    </div>
-
-    <div class="trade-list" id="history-trades">
-      <div class="empty-state">
-        <div class="icon">📜</div>
-        <h3>No trade history yet</h3>
-        <p>Completed trades will appear here with full details</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- STRATEGIES TAB -->
-  <div class="tab-content" id="tab-strategies">
-    <div class="strategy-card">
-      <div class="strategy-title">🔄 Echo — Price Origin Bounce</div>
-      <div class="strategy-desc">
-        When price makes a strong directional move (impulse), the starting point is the <strong>Origin</strong>. 
-        When price returns to this level — even after a long time — it tends to bounce for at least 8–10 pips.
-      </div>
-
-      <div class="section-title" style="margin-top: 16px;">Execution Grid</div>
-      <div class="grid-viz">
-        <div class="grid-bar-container">
-          <div class="grid-bar-row">
-            <div class="grid-bar-label">+3 pips</div>
-            <div class="grid-bar buy" style="width: 25%;">5% Scout</div>
-          </div>
-          <div class="grid-bar-row origin-marker">
-            <div class="grid-bar-label">Origin ±0</div>
-            <div class="grid-bar buy" style="width: 75%;">15% Core</div>
-          </div>
-          <div class="grid-bar-row">
-            <div class="grid-bar-label">−2 pips</div>
-            <div class="grid-bar buy" style="width: 100%;">20% Cushion</div>
-          </div>
-          <div class="grid-bar-row">
-            <div class="grid-bar-label">−4 pips</div>
-            <div class="grid-bar buy" style="width: 125%;">25% Sweet Spot</div>
-          </div>
-          <div class="grid-bar-row">
-            <div class="grid-bar-label">−6 pips</div>
-            <div class="grid-bar buy" style="width: 50%;">10%</div>
-          </div>
-          <div class="grid-bar-row">
-            <div class="grid-bar-label">−7 pips</div>
-            <div class="grid-bar buy" style="width: 25%;">5% Edge</div>
-          </div>
-          <div class="grid-bar-row">
-            <div class="grid-bar-label" style="color: var(--blue);">−10 pips</div>
-            <div class="grid-bar buy" style="width: 40%; opacity: 0.7;">8% Extended</div>
-          </div>
-          <div class="grid-bar-row">
-            <div class="grid-bar-label" style="color: var(--blue);">−13 pips</div>
-            <div class="grid-bar buy" style="width: 35%; opacity: 0.7;">7% Extended</div>
-          </div>
-          <div class="grid-bar-row">
-            <div class="grid-bar-label" style="color: var(--blue);">−16 pips</div>
-            <div class="grid-bar buy" style="width: 25%; opacity: 0.7;">5% Max Pre</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-title">Rules</div>
-      <ul class="rule-list">
-        <li><span class="rule-icon">🎯</span> <strong>TP:</strong> Laddered — 20% at +6 pips, 50% at +8–10 pips, 30% at +12–15 pips from origin</li>
-        <li><span class="rule-icon">🛡️</span> <strong>SL:</strong> No hard stop. Monitor & advise. Boss decides.</li>
-        <li><span class="rule-icon">⏰</span> <strong>Swap:</strong> ZERO tolerance. Auto-close 13min before if no response.</li>
-        <li><span class="rule-icon">🔥</span> <strong>Hot (High):</strong> Overflow to 190% of base lot</li>
-        <li><span class="rule-icon">🌡️</span> <strong>Warm (Medium):</strong> Overflow to 150% of base lot</li>
-        <li><span class="rule-icon">📈</span> <strong>Overflow:</strong> Every 3 pips past −7, ~10% lot each, max 20 pips deep</li>
-        <li><span class="rule-icon">🌙</span> <strong>Intraday only.</strong> Fresh start each day.</li>
-      </ul>
-    </div>
-
-    <div class="strategy-card" style="opacity: 0.5;">
-      <div class="strategy-title">⚡ Strategy B — Coming Soon</div>
-      <div class="strategy-desc">Trend Snapback / Bear Market Rally. To be formalized.</div>
-    </div>
+  <div class="section-title">⚡ Active Operations</div>
+  <div id="setups-container">
+    <!-- Setups injected here -->
   </div>
 
 </div>
 
 <script>
-// Tab switching
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-  });
-});
-
-// Filter buttons
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const parent = btn.parentElement;
-    parent.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
-
-// Current date
-const now = new Date();
-document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', { 
-  weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' 
-});
-
-// Set history date picker to today
-document.getElementById('history-date').valueAsDate = now;
-
-// Data layer — trades will be loaded from trades.json
-let tradesData = { setups: [], history: [] };
-
-async function loadTrades() {
+async function loadData() {
   try {
-    const resp = await fetch('trades.json?t=' + Date.now());
-    if (resp.ok) {
-      tradesData = await resp.json();
-      renderDashboard();
-      renderActiveTrades();
-      renderHistory();
-    }
-  } catch(e) { /* No trades yet */ }
+    const res = await fetch('trades.json?t=' + Date.now());
+    const data = await res.json();
+    render(data);
+  } catch (e) { console.error("Fetch error", e); }
 }
 
-function renderTradeCard(setup) {
-  const dirClass = setup.direction === 'BUY' ? 'buy' : 'sell';
-  const probClass = setup.probability === 'Hot' ? 'hot' : 'warm';
-  const statusClass = setup.status.toLowerCase();
+function render(data) {
+  // Stats
+  document.getElementById('daily-pnl').textContent = `$${(data.stats.dailyPnl || 0).toFixed(2)}`;
+  document.getElementById('daily-pnl').className = `stat-val ${data.stats.dailyPnl >= 0 ? 'green' : 'red'}`;
   
-  return `
-    <div class="trade-card" data-pair="${setup.pairCode.toLowerCase()}">
-      <div class="trade-header">
-        <div class="trade-pair">${setup.pair}</div>
-        <div class="trade-meta">
-          <span class="badge badge-${dirClass}">${setup.direction}</span>
-          <span class="badge badge-${probClass}">${setup.probability}</span>
-          <span class="badge badge-${statusClass}">${setup.status}</span>
+  document.getElementById('potential-pnl').textContent = `$${(data.stats.potentialPnl || 0).toFixed(2)}`;
+  
+  // Setups
+  const container = document.getElementById('setups-container');
+  container.innerHTML = '';
+
+  if (!data.setups || data.setups.length === 0) {
+    container.innerHTML = '<div style="padding:40px; text-align:center; color:#8b949e">No active operations.</div>';
+    return;
+  }
+
+  data.setups.forEach(setup => {
+    const dirClass = setup.direction === 'BUY' ? 'bg-green' : 'bg-red';
+    
+    // Grid Levels HTML
+    const levelsHtml = setup.levels.map(lvl => `
+      <tr>
+        <td class="level-name">${lvl.name}</td>
+        <td>${lvl.vol} @ ${lvl.price}</td>
+        <td>TP: ${lvl.tp}</td>
+        <td class="status-col"><span class="badge bg-blue">${lvl.status}</span></td>
+        <td class="profit-col green">+$${lvl.expectedProfit.toFixed(2)}</td>
+      </tr>
+    `).join('');
+
+    const card = `
+      <div class="setup-card">
+        <div class="setup-header">
+          <div class="pair-info">
+            <div class="pair-name">${setup.pair}</div>
+            <span class="badge ${dirClass}">${setup.direction}</span>
+            <span class="badge bg-blue">${setup.strategy}</span>
+          </div>
+          <div style="font-size:13px; color:var(--dim)">${setup.distanceToOrigin || 'At Market'}</div>
+        </div>
+        
+        <div class="setup-body">
+          <div class="setup-meta">
+            <div class="meta-item"><label>Origin</label><val>${setup.origin}</val></div>
+            <div class="meta-item"><label>Total Size</label><val>${setup.baseLot}</val></div>
+            <div class="meta-item"><label>Total Potential</label><val class="green">+$${setup.totalExpectedProfit.toFixed(2)}</val></div>
+            <div class="meta-item"><label>Status</label><val>${setup.status}</val></div>
+          </div>
+
+          <table class="grid-table">
+            <thead>
+              <tr>
+                <th>Level</th>
+                <th>Entry</th>
+                <th>Target</th>
+                <th style="text-align:center">Status</th>
+                <th style="text-align:right">Expected P&L</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${levelsHtml}
+              <tr class="expected-row">
+                <td colspan="4" style="text-align:right; color:var(--dim)">Total Potential:</td>
+                <td class="profit-col green">+$${setup.totalExpectedProfit.toFixed(2)}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="trade-details">
-        <div class="trade-detail">
-          <div class="trade-detail-label">Strategy</div>
-          <div class="trade-detail-value">${setup.strategy}</div>
-        </div>
-        <div class="trade-detail">
-          <div class="trade-detail-label">Origin</div>
-          <div class="trade-detail-value">${setup.origin}</div>
-        </div>
-        <div class="trade-detail">
-          <div class="trade-detail-label">Base Lot</div>
-          <div class="trade-detail-value">${setup.baseLot}</div>
-        </div>
-        <div class="trade-detail">
-          <div class="trade-detail-label">Filled</div>
-          <div class="trade-detail-value">${setup.filledPct || '0'}%</div>
-        </div>
-        <div class="trade-detail">
-          <div class="trade-detail-label">Unrealized P&L</div>
-          <div class="trade-detail-value" style="color: ${(setup.pnl || 0) >= 0 ? 'var(--green)' : 'var(--red)'}">$${(setup.pnl || 0).toFixed(2)}</div>
-        </div>
-        <div class="trade-detail">
-          <div class="trade-detail-label">Time</div>
-          <div class="trade-detail-value">${setup.time || '—'}</div>
-        </div>
-      </div>
-    </div>
-  `;
+    `;
+    container.innerHTML += card;
+  });
 }
 
-function renderDashboard() {
-  const active = tradesData.setups.filter(s => s.status !== 'Closed');
-  const closed = tradesData.setups.filter(s => s.status === 'Closed').concat(tradesData.history || []);
-  const totalPnl = [...tradesData.setups, ...(tradesData.history || [])].reduce((sum, s) => sum + (s.pnl || 0), 0);
-  const wins = closed.filter(s => (s.pnl || 0) > 0).length;
-  const winRate = closed.length > 0 ? Math.round((wins / closed.length) * 100) + '%' : '—';
-
-  document.getElementById('stat-pnl').textContent = '$' + totalPnl.toFixed(2);
-  document.getElementById('stat-pnl').className = 'stat-value ' + (totalPnl >= 0 ? 'green' : 'red');
-  document.getElementById('stat-active').textContent = active.length;
-  document.getElementById('stat-filled').textContent = tradesData.setups.filter(s => s.status === 'Filled' || s.status === 'Filling').length;
-  document.getElementById('stat-winrate').textContent = winRate;
-
-  if (active.length > 0) {
-    document.getElementById('dashboard-setups').innerHTML = '<div class="trade-list">' + active.map(renderTradeCard).join('') + '</div>';
-  }
-}
-
-function renderActiveTrades() {
-  const active = tradesData.setups.filter(s => s.status !== 'Closed');
-  if (active.length > 0) {
-    document.getElementById('active-trades').innerHTML = active.map(renderTradeCard).join('');
-  }
-}
-
-function renderHistory() {
-  const all = [...tradesData.setups.filter(s => s.status === 'Closed'), ...(tradesData.history || [])];
-  if (all.length > 0) {
-    document.getElementById('history-trades').innerHTML = all.map(renderTradeCard).join('');
-  }
-}
-
-// Load on start and auto-refresh every 30s
-loadTrades();
-setInterval(loadTrades, 30000);
+// Auto-refresh
+loadData();
+setInterval(loadData, 10000);
 </script>
 
 </body>
