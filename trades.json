@@ -1,4 +1,26 @@
 {
-  "setups": [],
+  "updatedAt": "2026-02-19T14:30:00Z",
+  "setups": [
+    {
+      "id": "echo-fiber-20260219",
+      "pair": "EURUSD",
+      "pairCode": "fiber",
+      "direction": "SELL",
+      "strategy": "Echo Grid",
+      "origin": "1.18029",
+      "baseLot": "0.08",
+      "probability": "Hot",
+      "status": "Pending",
+      "filledPct": 0,
+      "pnl": 0,
+      "time": "13:48 UTC",
+      "orders": [
+        { "level": "Origin", "price": 1.18029, "vol": 0.02, "status": "Pending" },
+        { "level": "+3 pips", "price": 1.18059, "vol": 0.03, "status": "Pending" },
+        { "level": "+6 pips", "price": 1.18089, "vol": 0.02, "status": "Pending" },
+        { "level": "+10 pips", "price": 1.18129, "vol": 0.01, "status": "Pending" }
+      ]
+    }
+  ],
   "history": []
 }
