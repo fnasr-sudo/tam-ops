@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-02-19T16:10:00Z",
+  "updatedAt": "2026-02-19T16:48:00Z",
   "stats": {
     "dailyPnl": 44.30,
-    "potentialPnl": 77.40,
+    "potentialPnl": 120.00,
     "balance": 164.68,
-    "equity": 208.18
+    "equity": 215.00
   },
   "setups": [
     {
@@ -24,40 +24,19 @@
       ]
     },
     {
-      "id": "echo-fiber-buy-20260219",
+      "id": "pyramid-fiber-buy-20260219",
       "pair": "EURUSD",
       "direction": "BUY",
-      "strategy": "Echo Grid",
-      "origin": "1.1732",
-      "baseLot": "0.20",
-      "status": "Pending",
-      "totalExpectedProfit": 26.70,
+      "strategy": "Pyramid Adds",
+      "origin": "1.17489 (Base)",
+      "baseLot": "0.04",
+      "status": "Active",
+      "totalExpectedProfit": "Open",
       "levels": [
-        { "name": "+3 pips", "price": 1.1735, "vol": 0.01, "tp": 1.1738, "status": "Pending", "expectedProfit": 0.30 },
-        { "name": "Origin", "price": 1.1732, "vol": 0.03, "tp": 1.1738, "status": "Pending", "expectedProfit": 1.80 },
-        { "name": "-2 pips", "price": 1.1730, "vol": 0.04, "tp": 1.1741, "status": "Pending", "expectedProfit": 4.40 },
-        { "name": "-4 pips", "price": 1.1728, "vol": 0.05, "tp": 1.1741, "status": "Pending", "expectedProfit": 6.50 },
-        { "name": "-6 pips", "price": 1.1726, "vol": 0.02, "tp": 1.1741, "status": "Pending", "expectedProfit": 3.00 },
-        { "name": "-7 pips", "price": 1.1725, "vol": 0.01, "tp": 1.1745, "status": "Pending", "expectedProfit": 2.00 },
-        { "name": "-10 pips", "price": 1.1722, "vol": 0.02, "tp": 1.1745, "status": "Pending", "expectedProfit": 4.60 },
-        { "name": "-13 pips", "price": 1.1719, "vol": 0.01, "tp": 1.1745, "status": "Pending", "expectedProfit": 2.60 },
-        { "name": "-16 pips", "price": 1.1716, "vol": 0.01, "tp": 1.1745, "status": "Pending", "expectedProfit": 2.90 }
-      ]
-    },
-    {
-      "id": "echo-fiber-sell-20260219",
-      "pair": "EURUSD",
-      "direction": "SELL",
-      "strategy": "Echo Grid",
-      "origin": "1.18029",
-      "baseLot": "0.08",
-      "status": "Pending",
-      "totalExpectedProfit": 6.40,
-      "levels": [
-        { "name": "Origin", "price": 1.18029, "vol": 0.02, "tp": 1.17949, "status": "Pending", "expectedProfit": 1.60 },
-        { "name": "+3 pips", "price": 1.18059, "vol": 0.03, "tp": 1.17979, "status": "Pending", "expectedProfit": 2.40 },
-        { "name": "+6 pips", "price": 1.18089, "vol": 0.02, "tp": 1.18009, "status": "Pending", "expectedProfit": 1.60 },
-        { "name": "+10 pips", "price": 1.18129, "vol": 0.01, "tp": 1.18049, "status": "Pending", "expectedProfit": 0.80 }
+        { "name": "Level 1 (+12 pips)", "price": 1.17637, "vol": 0.04, "tp": "Open", "status": "Active", "expectedProfit": 0.00 },
+        { "name": "Level 2 (+24 pips)", "price": 1.17729, "vol": 0.05, "tp": "Open", "status": "Pending", "expectedProfit": 0.00 },
+        { "name": "Level 3 (+36 pips)", "price": 1.17849, "vol": 0.06, "tp": "Open", "status": "Pending", "expectedProfit": 0.00 },
+        { "name": "Level 4 (+48 pips)", "price": 1.17969, "vol": 0.07, "tp": "Open", "status": "Pending", "expectedProfit": 0.00 }
       ]
     }
   ]
