@@ -2,65 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tam Ops — Command Center</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tam Ops</title>
 <style>
-  :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #e6edf3; --dim: #8b949e; --green: #3fb950; --red: #f85149; --blue: #58a6ff; --yellow: #d29922; }
+  :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #e6edf3; --dim: #8b949e; --green: #3fb950; --red: #f85149; --blue: #58a6ff; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 40px; }
+  body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 40px; -webkit-font-smoothing: antialiased; }
   
-  .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 20px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
-  .header h1 { font-size: 20px; font-weight: 700; }
-  .live-indicator { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--green); }
-  .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 18px; font-weight: 700; }
+  .live-indicator { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--green); font-weight: 600; letter-spacing: 0.5px; }
+  .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-  .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 16px; }
 
   /* Stats Grid */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
-  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 16px; border-radius: 8px; }
-  .stat-label { font-size: 11px; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; }
-  .stat-val { font-size: 24px; font-weight: 700; }
-  .green { color: var(--green); } .red { color: var(--red); } .blue { color: var(--blue); } .yellow { color: var(--yellow); }
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 12px; border-radius: 8px; }
+  .stat-label { font-size: 10px; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; letter-spacing: 0.5px; }
+  .stat-val { font-size: 18px; font-weight: 700; }
+  .green { color: var(--green); } .red { color: var(--red); }
 
-  /* Active Setups */
-  .section-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  /* Setup Card */
   .setup-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
-  .setup-header { padding: 16px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .pair-info { display: flex; align-items: center; gap: 12px; }
-  .pair-name { font-size: 18px; font-weight: 700; }
-  .badge { font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; text-transform: uppercase; }
+  
+  .setup-header { padding: 12px 16px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .pair-name { font-size: 16px; font-weight: 700; }
+  .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase; margin-left: 8px; }
   .bg-green { background: rgba(63,185,80,0.15); color: var(--green); }
   .bg-red { background: rgba(248,81,73,0.15); color: var(--red); }
   .bg-blue { background: rgba(88,166,255,0.15); color: var(--blue); }
 
   .setup-body { padding: 16px; }
-  .setup-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin-bottom: 20px; }
-  .meta-item label { font-size: 11px; color: var(--dim); display: block; margin-bottom: 4px; }
-  .meta-item val { font-size: 15px; font-weight: 600; }
-
-  /* Grid Levels Table */
-  .grid-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .grid-table th { text-align: left; color: var(--dim); padding: 8px; border-bottom: 1px solid var(--border); font-weight: 500; }
-  .grid-table td { padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .grid-table tr:last-child td { border-bottom: none; }
-  .level-name { font-weight: 600; color: var(--blue); }
-  .profit-col { text-align: right; font-family: monospace; font-size: 14px; }
-  .status-col { text-align: center; }
-
-  .expected-row { background: rgba(63,185,80,0.05); font-weight: 600; }
   
-  @media (max-width: 600px) {
-    .setup-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .grid-table th:nth-child(3), .grid-table td:nth-child(3) { display: none; } /* Hide TP on mobile */
-  }
+  .setup-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .meta-item label { font-size: 10px; color: var(--dim); display: block; margin-bottom: 2px; text-transform: uppercase; }
+  .meta-item val { font-size: 14px; font-weight: 600; }
+
+  /* Grid List (Mobile Friendly) */
+  .grid-list { list-style: none; }
+  .grid-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .grid-item:last-child { border-bottom: none; }
+  
+  .grid-left { display: flex; flex-direction: column; gap: 2px; }
+  .level-name { font-size: 13px; font-weight: 600; color: var(--blue); }
+  .level-detail { font-size: 11px; color: var(--dim); }
+  
+  .grid-right { text-align: right; }
+  .profit-val { font-size: 13px; font-weight: 600; color: var(--green); font-family: monospace; }
+  .status-badge { font-size: 9px; padding: 2px 5px; background: rgba(255,255,255,0.1); border-radius: 3px; color: var(--dim); margin-top: 2px; display: inline-block; }
+
+  .total-row { display: flex; justify-content: space-between; padding-top: 12px; margin-top: 8px; border-top: 1px dashed var(--border); font-weight: 600; font-size: 13px; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>Tam<span>Ops</span> Command Center</h1>
+  <h1>Tam<span>Ops</span></h1>
   <div class="live-indicator"><div class="dot"></div> LIVE</div>
 </div>
 
@@ -69,20 +68,15 @@
   <!-- Top Stats -->
   <div class="stats">
     <div class="stat-card">
-      <div class="stat-label">Daily Realized P&L</div>
+      <div class="stat-label">Realized P&L</div>
       <div class="stat-val" id="daily-pnl">$0.00</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Potential Profit (Active)</div>
+      <div class="stat-label">Potential</div>
       <div class="stat-val green" id="potential-pnl">$0.00</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Win Rate</div>
-      <div class="stat-val yellow" id="win-rate">—</div>
     </div>
   </div>
 
-  <div class="section-title">⚡ Active Operations</div>
   <div id="setups-container">
     <!-- Setups injected here -->
   </div>
@@ -110,61 +104,53 @@ function render(data) {
   container.innerHTML = '';
 
   if (!data.setups || data.setups.length === 0) {
-    container.innerHTML = '<div style="padding:40px; text-align:center; color:#8b949e">No active operations.</div>';
+    container.innerHTML = '<div style="padding:40px; text-align:center; color:#8b949e; font-size:13px;">No active operations.</div>';
     return;
   }
 
   data.setups.forEach(setup => {
     const dirClass = setup.direction === 'BUY' ? 'bg-green' : 'bg-red';
     
-    // Grid Levels HTML
+    // Mobile Grid List HTML
     const levelsHtml = setup.levels.map(lvl => `
-      <tr>
-        <td class="level-name">${lvl.name}</td>
-        <td>${lvl.vol} @ ${lvl.price}</td>
-        <td>TP: ${lvl.tp}</td>
-        <td class="status-col"><span class="badge bg-blue">${lvl.status}</span></td>
-        <td class="profit-col green">+$${lvl.expectedProfit.toFixed(2)}</td>
-      </tr>
+      <li class="grid-item">
+        <div class="grid-left">
+          <span class="level-name">${lvl.name}</span>
+          <span class="level-detail">${lvl.vol} lots @ ${lvl.price} (TP: ${lvl.tp})</span>
+        </div>
+        <div class="grid-right">
+          <div class="profit-val">+$${lvl.expectedProfit.toFixed(2)}</div>
+          <span class="status-badge">${lvl.status}</span>
+        </div>
+      </li>
     `).join('');
 
     const card = `
       <div class="setup-card">
         <div class="setup-header">
-          <div class="pair-info">
-            <div class="pair-name">${setup.pair}</div>
+          <div>
+            <span class="pair-name">${setup.pair}</span>
             <span class="badge ${dirClass}">${setup.direction}</span>
-            <span class="badge bg-blue">${setup.strategy}</span>
           </div>
-          <div style="font-size:13px; color:var(--dim)">${setup.distanceToOrigin || 'At Market'}</div>
+          <div style="font-size:11px; color:var(--dim)">${setup.strategy}</div>
         </div>
         
         <div class="setup-body">
           <div class="setup-meta">
             <div class="meta-item"><label>Origin</label><val>${setup.origin}</val></div>
-            <div class="meta-item"><label>Total Size</label><val>${setup.baseLot}</val></div>
-            <div class="meta-item"><label>Total Potential</label><val class="green">+$${setup.totalExpectedProfit.toFixed(2)}</val></div>
             <div class="meta-item"><label>Status</label><val>${setup.status}</val></div>
+            <div class="meta-item"><label>Total Size</label><val>${setup.baseLot}</val></div>
+            <div class="meta-item"><label>Potential</label><val class="green">+$${setup.totalExpectedProfit.toFixed(2)}</val></div>
           </div>
 
-          <table class="grid-table">
-            <thead>
-              <tr>
-                <th>Level</th>
-                <th>Entry</th>
-                <th>Target</th>
-                <th style="text-align:center">Status</th>
-                <th style="text-align:right">Expected P&L</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${levelsHtml}
-              <tr class="expected-row">
-                <td colspan="4" style="text-align:right; color:var(--dim)">Total Potential:</td>
-                <td class="profit-col green">+$${setup.totalExpectedProfit.toFixed(2)}</td>
-              </tr>
-            </tbody>
-          </table>
+          <ul class="grid-list">
+            ${levelsHtml}
+          </ul>
+          
+          <div class="total-row">
+            <span>Total Potential Profit</span>
+            <span class="green">+$${setup.totalExpectedProfit.toFixed(2)}</span>
+          </div>
         </div>
       </div>
     `;
