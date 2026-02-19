@@ -1,10 +1,28 @@
 {
-  "updatedAt": "2026-02-19T15:28:00Z",
+  "updatedAt": "2026-02-19T16:10:00Z",
   "stats": {
-    "dailyPnl": 0.00,
-    "potentialPnl": 33.10
+    "dailyPnl": 44.30,
+    "potentialPnl": 77.40,
+    "balance": 164.68,
+    "equity": 208.18
   },
   "setups": [
+    {
+      "id": "manual-fiber-buy-20260219-active",
+      "pair": "EURUSD",
+      "direction": "BUY",
+      "strategy": "Manual / Active",
+      "origin": "1.17489",
+      "baseLot": "0.40",
+      "status": "Active",
+      "totalExpectedProfit": "Open P/L: +44.30",
+      "levels": [
+        { "name": "Manual Entry 1", "price": 1.17480, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 12.00 },
+        { "name": "Manual Entry 2", "price": 1.17485, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 11.50 },
+        { "name": "Manual Entry 3", "price": 1.17493, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 10.70 },
+        { "name": "Manual Entry 4", "price": 1.17499, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 10.10 }
+      ]
+    },
     {
       "id": "echo-fiber-buy-20260219",
       "pair": "EURUSD",
