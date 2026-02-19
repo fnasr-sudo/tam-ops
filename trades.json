@@ -1,42 +1,49 @@
 {
-  "updatedAt": "2026-02-19T16:48:00Z",
+  "updatedAt": "2026-02-19T17:26:00Z",
   "stats": {
-    "dailyPnl": 44.30,
-    "potentialPnl": 120.00,
+    "dailyPnl": 63.53,
     "balance": 164.68,
-    "equity": 215.00
+    "equity": 228.21,
+    "totalLots": 0.53,
+    "targetLots": 0.67
   },
   "setups": [
     {
-      "id": "manual-fiber-buy-20260219-active",
+      "id": "fiber-buy-pyramid-20260219",
       "pair": "EURUSD",
       "direction": "BUY",
-      "strategy": "Manual / Active",
+      "strategy": "Manual + Pyramid",
       "origin": "1.17489",
-      "baseLot": "0.40",
+      "baseLot": "0.53",
       "status": "Active",
-      "totalExpectedProfit": "Open P/L: +44.30",
+      "totalExpectedProfit": "Open P/L: +63.53",
       "levels": [
-        { "name": "Manual Entry 1", "price": 1.17480, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 12.00 },
-        { "name": "Manual Entry 2", "price": 1.17485, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 11.50 },
-        { "name": "Manual Entry 3", "price": 1.17493, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 10.70 },
-        { "name": "Manual Entry 4", "price": 1.17499, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 10.10 }
+        { "name": "Manual 1", "price": 1.17480, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 17.80 },
+        { "name": "Manual 2", "price": 1.17485, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 17.30 },
+        { "name": "Manual 3", "price": 1.17493, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 16.50 },
+        { "name": "Manual 4", "price": 1.17499, "vol": 0.10, "tp": "Open", "status": "Active", "expectedProfit": 15.90 },
+        { "name": "Pyramid L1a", "price": 1.17652, "vol": 0.04, "tp": "Open", "status": "Active", "expectedProfit": 0.24 },
+        { "name": "Pyramid L1b", "price": 1.17677, "vol": 0.04, "tp": "Open", "status": "Active", "expectedProfit": -0.76 },
+        { "name": "Pyramid L2", "price": 1.17727, "vol": 0.05, "tp": "Open", "status": "Active", "expectedProfit": -3.45 },
+        { "name": "Pyramid L3", "price": 1.17849, "vol": 0.06, "tp": "Open", "status": "Pending", "expectedProfit": 0 },
+        { "name": "Pyramid L4", "price": 1.17969, "vol": 0.07, "tp": "Open", "status": "Pending", "expectedProfit": 0 },
+        { "name": "Pyramid L5", "price": 1.18089, "vol": 0.05, "tp": "Open", "status": "Pending", "expectedProfit": 0 }
       ]
     },
     {
-      "id": "pyramid-fiber-buy-20260219",
+      "id": "echo-fiber-sell-20260219",
       "pair": "EURUSD",
-      "direction": "BUY",
-      "strategy": "Pyramid Adds",
-      "origin": "1.17489 (Base)",
-      "baseLot": "0.04",
-      "status": "Active",
-      "totalExpectedProfit": "Open",
+      "direction": "SELL",
+      "strategy": "Echo Grid",
+      "origin": "1.18029",
+      "baseLot": "0.08",
+      "status": "Pending",
+      "totalExpectedProfit": 6.40,
       "levels": [
-        { "name": "Level 1 (+12 pips)", "price": 1.17637, "vol": 0.04, "tp": "Open", "status": "Active", "expectedProfit": 0.00 },
-        { "name": "Level 2 (+24 pips)", "price": 1.17729, "vol": 0.05, "tp": "Open", "status": "Pending", "expectedProfit": 0.00 },
-        { "name": "Level 3 (+36 pips)", "price": 1.17849, "vol": 0.06, "tp": "Open", "status": "Pending", "expectedProfit": 0.00 },
-        { "name": "Level 4 (+48 pips)", "price": 1.17969, "vol": 0.07, "tp": "Open", "status": "Pending", "expectedProfit": 0.00 }
+        { "name": "Origin", "price": 1.18029, "vol": 0.02, "tp": 1.17949, "status": "Pending", "expectedProfit": 1.60 },
+        { "name": "+3 pips", "price": 1.18059, "vol": 0.03, "tp": 1.17979, "status": "Pending", "expectedProfit": 2.40 },
+        { "name": "+6 pips", "price": 1.18089, "vol": 0.02, "tp": 1.18009, "status": "Pending", "expectedProfit": 1.60 },
+        { "name": "+10 pips", "price": 1.18129, "vol": 0.01, "tp": 1.18049, "status": "Pending", "expectedProfit": 0.80 }
       ]
     }
   ]
