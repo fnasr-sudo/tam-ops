@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-19T22:53:00Z",
+  "updatedAt": "2026-02-20T03:22:00Z",
   "stats": {
     "dailyPnl": 126.49,
     "balance": 291.17,
@@ -54,6 +54,31 @@
         { "name": "+3 pips", "price": 1.18059, "vol": 0.03, "status": "Pending" },
         { "name": "+6 pips", "price": 1.18089, "vol": 0.02, "status": "Pending" },
         { "name": "+10 pips", "price": 1.18129, "vol": 0.01, "status": "Pending" }
+      ]
+    },
+    {
+      "id": "echo-fiber-buy-20260220-1",
+      "pair": "EURUSD",
+      "direction": "BUY",
+      "strategy": "Echo Grid",
+      "origin": "1.17465",
+      "baseLot": "0.20",
+      "status": "Pending",
+      "levels": [
+        { "name": "+3 pips", "price": 1.17495, "vol": 0.01, "status": "Pending" },
+        { "name": "Origin", "price": 1.17465, "vol": 0.03, "status": "Pending" },
+        { "name": "-2 pips", "price": 1.17445, "vol": 0.04, "status": "Pending" },
+        { "name": "-4 pips", "price": 1.17425, "vol": 0.05, "status": "Pending" },
+        { "name": "-6 pips", "price": 1.17405, "vol": 0.02, "status": "Pending" },
+        { "name": "-7 pips", "price": 1.17395, "vol": 0.01, "status": "Pending" },
+        { "name": "-10 pips", "price": 1.17365, "vol": 0.02, "status": "Pending" },
+        { "name": "-13 pips", "price": 1.17335, "vol": 0.01, "status": "Pending" },
+        { "name": "-16 pips", "price": 1.17305, "vol": 0.01, "status": "Pending" },
+        { "name": "-19 pips", "price": 1.17275, "vol": 0.02, "status": "Pending" },
+        { "name": "-22 pips", "price": 1.17245, "vol": 0.02, "status": "Pending" },
+        { "name": "-25 pips", "price": 1.17215, "vol": 0.02, "status": "Pending" },
+        { "name": "-28 pips", "price": 1.17185, "vol": 0.02, "status": "Pending" },
+        { "name": "-31 pips", "price": 1.17155, "vol": 0.02, "status": "Pending" }
       ]
     }
   ]
