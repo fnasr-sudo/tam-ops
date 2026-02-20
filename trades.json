@@ -1,23 +1,39 @@
 {
-  "updatedAt": "2026-02-20T03:22:00Z",
+  "updatedAt": "2026-02-20T03:34:00Z",
   "stats": {
     "dailyPnl": 126.49,
     "balance": 291.17,
     "equity": 291.17,
     "totalLots": 0,
-    "status": "FLAT"
+    "potentialPnl": 0,
+    "status": "PENDING"
   },
   "setups": [
     {
-      "id": "day-result-20260219",
+      "id": "echo-fiber-buy-20260220-1",
       "pair": "EURUSD",
       "direction": "BUY",
-      "strategy": "Manual + Pyramid",
-      "origin": "1.17489",
-      "baseLot": "0.68 (peak)",
-      "status": "Closed",
-      "totalExpectedProfit": "REALIZED: +$126.49",
-      "levels": []
+      "strategy": "Echo Grid",
+      "origin": "1.17465",
+      "baseLot": "0.30 (Warm)",
+      "status": "Pending",
+      "totalExpectedProfit": 24.00,
+      "levels": [
+        { "name": "+3 pips (Scout)", "price": 1.17495, "vol": 0.01, "tp": 1.17525, "expectedProfit": 0.30, "status": "Pending", "orderId": 2880707 },
+        { "name": "Origin", "price": 1.17465, "vol": 0.03, "tp": 1.17525, "expectedProfit": 1.80, "status": "Pending", "orderId": 2880708 },
+        { "name": "-2 pips", "price": 1.17445, "vol": 0.04, "tp": 1.17555, "expectedProfit": 4.40, "status": "Pending", "orderId": 2880709 },
+        { "name": "-4 pips", "price": 1.17425, "vol": 0.05, "tp": 1.17555, "expectedProfit": 6.50, "status": "Pending", "orderId": 2880710 },
+        { "name": "-6 pips", "price": 1.17405, "vol": 0.02, "tp": 1.17555, "expectedProfit": 3.00, "status": "Pending", "orderId": 2880711 },
+        { "name": "-7 pips", "price": 1.17395, "vol": 0.01, "tp": 1.17595, "expectedProfit": 2.00, "status": "Pending", "orderId": 2880712 },
+        { "name": "-10 pips", "price": 1.17365, "vol": 0.02, "tp": 1.17595, "expectedProfit": 4.60, "status": "Pending", "orderId": 2880713 },
+        { "name": "-13 pips", "price": 1.17335, "vol": 0.01, "tp": 1.17595, "expectedProfit": 2.60, "status": "Pending", "orderId": 2880714 },
+        { "name": "-16 pips", "price": 1.17305, "vol": 0.01, "tp": 1.17595, "expectedProfit": 2.90, "status": "Pending", "orderId": 2880715 },
+        { "name": "-19 pips (OF)", "price": 1.17275, "vol": 0.02, "tp": 1.17595, "expectedProfit": 6.40, "status": "Pending", "orderId": 2880716 },
+        { "name": "-22 pips (OF)", "price": 1.17245, "vol": 0.02, "tp": 1.17595, "expectedProfit": 7.00, "status": "Pending", "orderId": 2880717 },
+        { "name": "-25 pips (OF)", "price": 1.17215, "vol": 0.02, "tp": 1.17595, "expectedProfit": 7.60, "status": "Pending", "orderId": 2880718 },
+        { "name": "-28 pips (OF)", "price": 1.17185, "vol": 0.02, "tp": 1.17595, "expectedProfit": 8.20, "status": "Pending", "orderId": 2880719 },
+        { "name": "-31 pips (OF)", "price": 1.17155, "vol": 0.02, "tp": 1.17595, "expectedProfit": 8.80, "status": "Pending", "orderId": 2880720 }
+      ]
     },
     {
       "id": "echo-fiber-buy-20260219",
@@ -29,15 +45,15 @@
       "status": "Pending (Overnight)",
       "totalExpectedProfit": 26.70,
       "levels": [
-        { "name": "+3 pips", "price": 1.1735, "vol": 0.01, "status": "Pending" },
-        { "name": "Origin", "price": 1.1732, "vol": 0.03, "status": "Pending" },
-        { "name": "-2 pips", "price": 1.1730, "vol": 0.04, "status": "Pending" },
-        { "name": "-4 pips", "price": 1.1728, "vol": 0.05, "status": "Pending" },
-        { "name": "-6 pips", "price": 1.1726, "vol": 0.02, "status": "Pending" },
-        { "name": "-7 pips", "price": 1.1725, "vol": 0.01, "status": "Pending" },
-        { "name": "-10 pips", "price": 1.1722, "vol": 0.02, "status": "Pending" },
-        { "name": "-13 pips", "price": 1.1719, "vol": 0.01, "status": "Pending" },
-        { "name": "-16 pips", "price": 1.1716, "vol": 0.01, "status": "Pending" }
+        { "name": "+3 pips", "price": 1.1735, "vol": 0.01, "tp": 1.1738, "expectedProfit": 0.30, "status": "Pending" },
+        { "name": "Origin", "price": 1.1732, "vol": 0.03, "tp": 1.1738, "expectedProfit": 1.80, "status": "Pending" },
+        { "name": "-2 pips", "price": 1.1730, "vol": 0.04, "tp": 1.1741, "expectedProfit": 4.40, "status": "Pending" },
+        { "name": "-4 pips", "price": 1.1728, "vol": 0.05, "tp": 1.1741, "expectedProfit": 6.50, "status": "Pending" },
+        { "name": "-6 pips", "price": 1.1726, "vol": 0.02, "tp": 1.1741, "expectedProfit": 3.00, "status": "Pending" },
+        { "name": "-7 pips", "price": 1.1725, "vol": 0.01, "tp": 1.1745, "expectedProfit": 2.00, "status": "Pending" },
+        { "name": "-10 pips", "price": 1.1722, "vol": 0.02, "tp": 1.1745, "expectedProfit": 4.60, "status": "Pending" },
+        { "name": "-13 pips", "price": 1.1719, "vol": 0.01, "tp": 1.1745, "expectedProfit": 2.60, "status": "Pending" },
+        { "name": "-16 pips", "price": 1.1716, "vol": 0.01, "tp": 1.1745, "expectedProfit": 2.90, "status": "Pending" }
       ]
     },
     {
@@ -50,35 +66,10 @@
       "status": "Pending (Overnight)",
       "totalExpectedProfit": 6.40,
       "levels": [
-        { "name": "Origin", "price": 1.18029, "vol": 0.02, "status": "Pending" },
-        { "name": "+3 pips", "price": 1.18059, "vol": 0.03, "status": "Pending" },
-        { "name": "+6 pips", "price": 1.18089, "vol": 0.02, "status": "Pending" },
-        { "name": "+10 pips", "price": 1.18129, "vol": 0.01, "status": "Pending" }
-      ]
-    },
-    {
-      "id": "echo-fiber-buy-20260220-1",
-      "pair": "EURUSD",
-      "direction": "BUY",
-      "strategy": "Echo Grid",
-      "origin": "1.17465",
-      "baseLot": "0.20",
-      "status": "Pending",
-      "levels": [
-        { "name": "+3 pips", "price": 1.17495, "vol": 0.01, "status": "Pending" },
-        { "name": "Origin", "price": 1.17465, "vol": 0.03, "status": "Pending" },
-        { "name": "-2 pips", "price": 1.17445, "vol": 0.04, "status": "Pending" },
-        { "name": "-4 pips", "price": 1.17425, "vol": 0.05, "status": "Pending" },
-        { "name": "-6 pips", "price": 1.17405, "vol": 0.02, "status": "Pending" },
-        { "name": "-7 pips", "price": 1.17395, "vol": 0.01, "status": "Pending" },
-        { "name": "-10 pips", "price": 1.17365, "vol": 0.02, "status": "Pending" },
-        { "name": "-13 pips", "price": 1.17335, "vol": 0.01, "status": "Pending" },
-        { "name": "-16 pips", "price": 1.17305, "vol": 0.01, "status": "Pending" },
-        { "name": "-19 pips", "price": 1.17275, "vol": 0.02, "status": "Pending" },
-        { "name": "-22 pips", "price": 1.17245, "vol": 0.02, "status": "Pending" },
-        { "name": "-25 pips", "price": 1.17215, "vol": 0.02, "status": "Pending" },
-        { "name": "-28 pips", "price": 1.17185, "vol": 0.02, "status": "Pending" },
-        { "name": "-31 pips", "price": 1.17155, "vol": 0.02, "status": "Pending" }
+        { "name": "Origin", "price": 1.18029, "vol": 0.02, "tp": 1.17949, "expectedProfit": 1.60, "status": "Pending" },
+        { "name": "+3 pips", "price": 1.18059, "vol": 0.03, "tp": 1.17979, "expectedProfit": 2.40, "status": "Pending" },
+        { "name": "+6 pips", "price": 1.18089, "vol": 0.02, "tp": 1.18009, "expectedProfit": 1.60, "status": "Pending" },
+        { "name": "+10 pips", "price": 1.18129, "vol": 0.01, "tp": 1.18049, "expectedProfit": 0.80, "status": "Pending" }
       ]
     }
   ]
