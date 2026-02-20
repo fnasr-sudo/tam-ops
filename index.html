@@ -65,6 +65,8 @@
   /* Strategy Card */
   .strategy-desc { font-size: 14px; line-height: 1.5; color: var(--dim); margin-bottom: 16px; }
   .strategy-rules li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; gap: 8px; }
+  
+  .id-badge { font-size: 10px; background: rgba(255,255,255,0.1); color: var(--dim); padding: 2px 5px; border-radius: 4px; margin-right: 6px; font-family: monospace; vertical-align: middle; }
 </style>
 </head>
 <body>
@@ -160,7 +162,10 @@ function render(data) {
     const levelsHtml = setup.levels.map(lvl => `
       <li class="grid-item">
         <div class="grid-left">
-          <span class="level-name">${lvl.name}</span>
+          <div>
+            <span class="id-badge">#${lvl.displayId}</span>
+            <span class="level-name">${lvl.name}</span>
+          </div>
           <span class="level-detail">${lvl.vol} lots @ ${lvl.price} (TP: ${lvl.tp})</span>
         </div>
         <div class="grid-right">
