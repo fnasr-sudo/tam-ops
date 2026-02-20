@@ -1,221 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tam Ops Dashboard</title>
-    <style>
-        body {
-            background-color: #0d1117;
-            color: #e6edf3;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.5;
-        }
-        .header {
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        h1 { margin: 0; font-size: 20px; }
-        .live-tag {
-            background: rgba(63, 185, 80, 0.1);
-            color: #3fb950;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            border: 1px solid rgba(63, 185, 80, 0.4);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .stat-box {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 15px;
-        }
-        .stat-label {
-            font-size: 12px;
-            color: #8b949e;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            margin-top: 5px;
-        }
-        .green { color: #3fb950; }
-        .red { color: #f85149; }
-        
-        .card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .card-header {
-            background: #21262d;
-            padding: 10px 15px;
-            font-weight: 600;
-            font-size: 14px;
-            border-bottom: 1px solid #30363d;
-            display: flex;
-            justify-content: space-between;
-        }
-        .card-body {
-            padding: 15px;
-        }
-        .list-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #21262d;
-            font-size: 13px;
-        }
-        .list-item:last-child { border-bottom: none; }
-        .badge {
-            display: inline-block;
-            padding: 2px 6px;
-            font-size: 11px;
-            border-radius: 10px;
-            background: #30363d;
-            color: #e6edf3;
-        }
-        .badge.buy { background: rgba(63, 185, 80, 0.15); color: #3fb950; }
-        .badge.sell { background: rgba(248, 81, 73, 0.15); color: #f85149; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Tam Ops</title>
+<style>
+  :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #e6edf3; --dim: #8b949e; --green: #3fb950; --red: #f85149; --blue: #58a6ff; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 80px; -webkit-font-smoothing: antialiased; }
+  
+  .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
+  .header h1 { font-size: 18px; font-weight: 700; }
+  .live-indicator { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--green); font-weight: 600; letter-spacing: 0.5px; }
+  .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+  .container { max-width: 800px; margin: 0 auto; padding: 16px; }
+
+  /* Navigation Tabs */
+  .tabs { display: flex; background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 53px; z-index: 90; overflow-x: auto; }
+  .tab { flex: 1; text-align: center; padding: 12px; font-size: 13px; color: var(--dim); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+  .tab.active { color: var(--text); border-bottom-color: var(--green); font-weight: 600; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.2s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Stats Grid */
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; margin-top: 16px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 12px; border-radius: 8px; }
+  .stat-label { font-size: 10px; text-transform: uppercase; color: var(--dim); margin-bottom: 4px; letter-spacing: 0.5px; }
+  .stat-val { font-size: 18px; font-weight: 700; }
+  .green { color: var(--green); } .red { color: var(--red); }
+
+  /* Setup Card */
+  .setup-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .setup-header { padding: 12px 16px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .pair-name { font-size: 16px; font-weight: 700; }
+  .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase; margin-left: 8px; }
+  .bg-green { background: rgba(63,185,80,0.15); color: var(--green); }
+  .bg-red { background: rgba(248,81,73,0.15); color: var(--red); }
+  .bg-blue { background: rgba(88,166,255,0.15); color: var(--blue); }
+
+  .setup-body { padding: 16px; }
+  .setup-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .meta-item label { font-size: 10px; color: var(--dim); display: block; margin-bottom: 2px; text-transform: uppercase; }
+  .meta-item val { font-size: 14px; font-weight: 600; }
+
+  /* Grid List */
+  .grid-list { list-style: none; }
+  .grid-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .grid-item:last-child { border-bottom: none; }
+  .grid-left { display: flex; flex-direction: column; gap: 2px; }
+  .level-name { font-size: 13px; font-weight: 600; color: var(--blue); }
+  .level-detail { font-size: 11px; color: var(--dim); }
+  .grid-right { text-align: right; }
+  .profit-val { font-size: 13px; font-weight: 600; color: var(--green); font-family: monospace; }
+  .status-badge { font-size: 9px; padding: 2px 5px; background: rgba(255,255,255,0.1); border-radius: 3px; color: var(--dim); margin-top: 2px; display: inline-block; }
+  .total-row { display: flex; justify-content: space-between; padding-top: 12px; margin-top: 8px; border-top: 1px dashed var(--border); font-weight: 600; font-size: 13px; }
+
+  /* Empty State */
+  .empty-state { padding: 40px; text-align: center; color: var(--dim); font-size: 13px; }
+
+  /* Strategy Card */
+  .strategy-desc { font-size: 14px; line-height: 1.5; color: var(--dim); margin-bottom: 16px; }
+  .strategy-rules li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; gap: 8px; }
+  
+  .id-badge { font-size: 10px; background: rgba(255,255,255,0.1); color: var(--dim); padding: 2px 5px; border-radius: 4px; margin-right: 6px; font-family: monospace; vertical-align: middle; }
+</style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Tam Ops Dashboard</h1>
-        <div class="live-tag">LIVE SYSTEM</div>
+<div class="header">
+  <h1>Tam<span>Ops</span></h1>
+  <div class="live-indicator"><div class="dot"></div> LIVE</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="dashboard">Dashboard</div>
+  <div class="tab" data-tab="history">History</div>
+  <div class="tab" data-tab="strategies">Strategies</div>
+</div>
+
+<div class="container">
+  
+  <!-- DASHBOARD -->
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Realized P&L</div>
+        <div class="stat-val green" id="daily-pnl">+$196.29</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Equity (Live)</div>
+        <div class="stat-val green" id="potential-pnl">$403.58</div>
+      </div>
     </div>
+    <div id="setups-container"></div>
+  </div>
 
-    <div class="stats-grid">
-        <div class="stat-box">
-            <div class="stat-label">Equity</div>
-            <div class="stat-value green" id="equity">Loading...</div>
+  <!-- HISTORY -->
+  <div id="tab-history" class="tab-content">
+    <div class="setup-card">
+        <div class="setup-header">
+          <div>
+            <span class="pair-name">Echo Fiber BUY (1.17465)</span>
+            <span class="badge bg-green">CLOSED</span>
+          </div>
+          <div style="font-size:11px; color:var(--dim)">Cut Partial</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-label">Daily P&L</div>
-            <div class="stat-value" id="pnl">Loading...</div>
+        <div class="setup-body">
+            <div class="total-row">
+                <span>Realized Profit</span>
+                <span class="green">+$69.80</span>
+            </div>
         </div>
     </div>
-
-    <div id="content">
-        <div style="text-align:center; color: #8b949e; padding: 20px;">
-            Loading trade data...
+    <div class="setup-card">
+        <div class="setup-header">
+          <div>
+            <span class="pair-name">Echo Cable SELL (1.35138)</span>
+            <span class="badge bg-green">CLOSED</span>
+          </div>
+          <div style="font-size:11px; color:var(--dim)">Cut Partial (Completed)</div>
+        </div>
+        <div class="setup-body">
+            <div class="total-row">
+                <span>Status</span>
+                <span class="green">Finished</span>
+            </div>
         </div>
     </div>
+  </div>
 
-    <script>
-        // Static Fallback Data (renders immediately if fetch fails)
-        const staticData = {
-            stats: {
-                equity: 403.58,
-                dailyPnl: 196.29
-            },
-            setups: [
-                {
-                    pair: "EURUSD (Manual)",
-                    direction: "BUY",
-                    baseLot: "0.40",
-                    totalExpectedProfit: 18.70,
-                    levels: [
-                        { displayId: "M1", name: "Manual Buy", price: 1.17853, vol: 0.1, expectedProfit: -5.00 },
-                        { displayId: "M2", name: "Manual Buy", price: 1.17772, vol: 0.1, expectedProfit: 3.10 },
-                        { displayId: "M3", name: "Manual Buy", price: 1.17708, vol: 0.1, expectedProfit: 9.50 },
-                        { displayId: "M4", name: "Manual Buy", price: 1.17692, vol: 0.1, expectedProfit: 11.10 }
-                    ]
-                }
-            ]
-        };
+  <!-- STRATEGIES -->
+  <div id="tab-strategies" class="tab-content">
+    <div class="setup-card">
+      <div class="setup-header"><span class="pair-name">Echo Strategy</span></div>
+      <div class="setup-body">
+        <div class="strategy-desc">Price echoes back to its origin. Laddered entries around the impulse start level.</div>
+        <ul class="strategy-rules" style="list-style:none">
+          <li><span>🎯</span> TP: Laddered (+6, +8, +12 pips)</li>
+          <li><span>🛡️</span> SL: Soft stop (monitor)</li>
+          <li><span>⏰</span> Swap: Close all before rollover</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-        function render(data) {
-            // Stats
-            document.getElementById('equity').innerText = '$' + data.stats.equity.toFixed(2);
-            
-            const pnl = data.stats.dailyPnl;
-            const pnlEl = document.getElementById('pnl');
-            pnlEl.innerText = (pnl >= 0 ? '+' : '') + '$' + pnl.toFixed(2);
-            pnlEl.className = 'stat-value ' + (pnl >= 0 ? 'green' : 'red');
+</div>
 
-            // Setups
-            const content = document.getElementById('content');
-            content.innerHTML = '';
+<script>
+// Tab Switching
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('tab-' + t.dataset.tab).classList.add('active');
+  });
+});
 
-            if (!data.setups || data.setups.length === 0) {
-                content.innerHTML = '<div style="padding:20px; text-align:center; color:#8b949e">No active trades.</div>';
-                return;
-            }
+// HARDCODED DATA TO BYPASS CACHE
+const staticData = {
+  "updatedAt": "2026-02-20T21:30:00Z",
+  "stats": {
+    "dailyPnl": 196.29,
+    "balance": 403.58,
+    "equity": 403.58,
+    "totalLots": 0.4,
+    "status": "ACTIVE"
+  },
+  "setups": [
+    {
+      "id": "manual-fiber-buy-20260220",
+      "pair": "EURUSD (Manual)",
+      "direction": "BUY",
+      "strategy": "Manual",
+      "origin": "~1.1775",
+      "baseLot": "0.40",
+      "status": "Active (Floating +$18.70)",
+      "totalExpectedProfit": 18.70,
+      "levels": [
+        { "displayId": "M1", "name": "Manual Buy", "price": 1.17853, "vol": 0.1, "tp": "None", "expectedProfit": -5.00, "status": "Active" },
+        { "displayId": "M2", "name": "Manual Buy", "price": 1.17772, "vol": 0.1, "tp": "None", "expectedProfit": 3.10, "status": "Active" },
+        { "displayId": "M3", "name": "Manual Buy", "price": 1.17708, "vol": 0.1, "tp": "None", "expectedProfit": 9.50, "status": "Active" },
+        { "displayId": "M4", "name": "Manual Buy", "price": 1.17692, "vol": 0.1, "tp": "None", "expectedProfit": 11.10, "status": "Active" }
+      ]
+    },
+    {
+      "id": "echo-ninja-buy-20260220",
+      "pair": "USDJPY",
+      "direction": "BUY",
+      "strategy": "Echo Grid",
+      "origin": "153.64",
+      "baseLot": "0.53 (Hot)",
+      "status": "Pending",
+      "totalExpectedProfit": 35.00,
+      "levels": [
+        { "displayId": "18", "name": "+3 pips (Scout)", "price": 153.670, "vol": 0.01, "tp": 153.700, "expectedProfit": 0.20, "status": "Pending", "orderId": 2880917 },
+        { "displayId": "19", "name": "Origin", "price": 153.640, "vol": 0.04, "tp": 153.700, "expectedProfit": 1.57, "status": "Pending", "orderId": 2880918 },
+        { "displayId": "20", "name": "-2 pips", "price": 153.620, "vol": 0.06, "tp": 153.730, "expectedProfit": 4.31, "status": "Pending", "orderId": 2880919 },
+        { "displayId": "21", "name": "-4 pips", "price": 153.600, "vol": 0.08, "tp": 153.730, "expectedProfit": 6.79, "status": "Pending", "orderId": 2880920 },
+        { "displayId": "22", "name": "-6 pips", "price": 153.580, "vol": 0.03, "tp": 153.730, "expectedProfit": 2.94, "status": "Pending", "orderId": 2880921 },
+        { "displayId": "23", "name": "-7 pips", "price": 153.570, "vol": 0.01, "tp": 153.770, "expectedProfit": 1.31, "status": "Pending", "orderId": 2880922 },
+        { "displayId": "24", "name": "-10 pips", "price": 153.540, "vol": 0.02, "tp": 153.770, "expectedProfit": 3.00, "status": "Pending", "orderId": 2880923 },
+        { "displayId": "25", "name": "-13 pips", "price": 153.510, "vol": 0.02, "tp": 153.770, "expectedProfit": 3.39, "status": "Pending", "orderId": 2880924 },
+        { "displayId": "26", "name": "-16 pips", "price": 153.480, "vol": 0.01, "tp": 153.770, "expectedProfit": 1.90, "status": "Pending", "orderId": 2880925 },
+        { "displayId": "27", "name": "-19 pips (OF)", "price": 153.450, "vol": 0.03, "tp": 153.770, "expectedProfit": 6.27, "status": "Pending", "orderId": 2880926 },
+        { "displayId": "28", "name": "-22 pips (OF)", "price": 153.420, "vol": 0.03, "tp": 153.770, "expectedProfit": 6.86, "status": "Pending", "orderId": 2880927 },
+        { "displayId": "29", "name": "-25 pips (OF)", "price": 153.390, "vol": 0.03, "tp": 153.770, "expectedProfit": 7.45, "status": "Pending", "orderId": 2880928 },
+        { "displayId": "30", "name": "-28 pips (OF)", "price": 153.360, "vol": 0.03, "tp": 153.770, "expectedProfit": 8.04, "status": "Pending", "orderId": 2880929 },
+        { "displayId": "31", "name": "-31 pips (OF)", "price": 153.330, "vol": 0.03, "tp": 153.770, "expectedProfit": 8.63, "status": "Pending", "orderId": 2880930 },
+        { "displayId": "32", "name": "-34 pips (OF)", "price": 153.300, "vol": 0.03, "tp": 153.770, "expectedProfit": 9.22, "status": "Pending", "orderId": 2880931 },
+        { "displayId": "33", "name": "-37 pips (OF)", "price": 153.270, "vol": 0.03, "tp": 153.770, "expectedProfit": 9.80, "status": "Pending", "orderId": 2880932 },
+        { "displayId": "34", "name": "-40 pips (OF)", "price": 153.240, "vol": 0.03, "tp": 153.770, "expectedProfit": 10.39, "status": "Pending", "orderId": 2880933 },
+        { "displayId": "35", "name": "-43 pips (OF)", "price": 153.210, "vol": 0.01, "tp": 153.770, "expectedProfit": 3.67, "status": "Pending", "orderId": 2880934 }
+      ]
+    },
+    {
+      "id": "echo-fiber-buy-20260219",
+      "pair": "EURUSD",
+      "direction": "BUY",
+      "strategy": "Echo Grid",
+      "origin": "1.1732",
+      "baseLot": "0.20",
+      "status": "Pending (Overnight)",
+      "totalExpectedProfit": 26.70,
+      "levels": [
+        { "displayId": "54", "name": "+3 pips", "price": 1.1735, "vol": 0.01, "tp": 1.1738, "expectedProfit": 0.30, "status": "Pending" },
+        { "displayId": "55", "name": "Origin", "price": 1.1732, "vol": 0.03, "tp": 1.1738, "expectedProfit": 1.80, "status": "Pending" },
+        { "displayId": "56", "name": "-2 pips", "price": 1.1730, "vol": 0.04, "tp": 1.1741, "expectedProfit": 4.40, "status": "Pending" },
+        { "displayId": "57", "name": "-4 pips", "price": 1.1728, "vol": 0.05, "tp": 1.1741, "expectedProfit": 6.50, "status": "Pending" },
+        { "displayId": "58", "name": "-6 pips", "price": 1.1726, "vol": 0.02, "tp": 1.1741, "expectedProfit": 3.00, "status": "Pending" },
+        { "displayId": "59", "name": "-7 pips", "price": 1.1725, "vol": 0.01, "tp": 1.1745, "expectedProfit": 2.00, "status": "Pending" },
+        { "displayId": "60", "name": "-10 pips", "price": 1.1722, "vol": 0.02, "tp": 1.1745, "expectedProfit": 4.60, "status": "Pending" },
+        { "displayId": "61", "name": "-13 pips", "price": 1.1719, "vol": 0.01, "tp": 1.1745, "expectedProfit": 2.60, "status": "Pending" },
+        { "displayId": "62", "name": "-16 pips", "price": 1.1716, "vol": 0.01, "tp": 1.1745, "expectedProfit": 2.90, "status": "Pending" }
+      ]
+    },
+    {
+      "id": "echo-fiber-sell-20260219",
+      "pair": "EURUSD",
+      "direction": "SELL",
+      "strategy": "Echo Grid",
+      "origin": "1.18029",
+      "baseLot": "0.08",
+      "status": "Pending (Overnight)",
+      "totalExpectedProfit": 6.40,
+      "levels": [
+        { "displayId": "63", "name": "Origin", "price": 1.18029, "vol": 0.02, "tp": 1.17949, "expectedProfit": 1.60, "status": "Pending" },
+        { "displayId": "64", "name": "+3 pips", "price": 1.18059, "vol": 0.03, "tp": 1.17979, "expectedProfit": 2.40, "status": "Pending" },
+        { "displayId": "65", "name": "+6 pips", "price": 1.18089, "vol": 0.02, "tp": 1.18009, "expectedProfit": 1.60, "status": "Pending" },
+        { "displayId": "66", "name": "+10 pips", "price": 1.18129, "vol": 0.01, "tp": 1.18049, "expectedProfit": 0.80, "status": "Pending" }
+      ]
+    }
+  ]
+};
 
-            data.setups.forEach(setup => {
-                let rows = '';
-                setup.levels.forEach(lvl => {
-                    const profitClass = lvl.expectedProfit >= 0 ? 'green' : 'red';
-                    rows += `
-                        <div class="list-item">
-                            <div>
-                                <span style="font-family:monospace; color:#8b949e; margin-right:5px">#${lvl.displayId}</span>
-                                <b>${lvl.name}</b> <span style="color:#8b949e">(${lvl.vol} @ ${lvl.price})</span>
-                            </div>
-                            <div class="${profitClass}">
-                                ${lvl.expectedProfit >= 0 ? '+' : ''}$${lvl.expectedProfit.toFixed(2)}
-                            </div>
-                        </div>
-                    `;
-                });
+async function loadData() {
+  render(staticData);
+  try {
+    const res = await fetch('trades.json?t=' + Date.now());
+    const data = await res.json();
+    render(data);
+  } catch (e) { console.log("Using static data"); }
+}
 
-                const badgeClass = setup.direction === 'BUY' ? 'buy' : 'sell';
+function render(data) {
+  // Stats
+  document.getElementById('daily-pnl').textContent = `${(data.stats.dailyPnl >= 0 ? '+' : '')}$${(data.stats.dailyPnl || 0).toFixed(2)}`;
+  document.getElementById('daily-pnl').className = `stat-val ${data.stats.dailyPnl >= 0 ? 'green' : 'red'}`;
+  document.getElementById('potential-pnl').textContent = `$${(data.stats.equity || data.stats.balance || 0).toFixed(2)}`;
+  
+  // Setups
+  const container = document.getElementById('setups-container');
+  container.innerHTML = '';
 
-                content.innerHTML += `
-                    <div class="card">
-                        <div class="card-header">
-                            <div>${setup.pair} <span class="badge ${badgeClass}">${setup.direction}</span></div>
-                            <div>${setup.baseLot} Lots</div>
-                        </div>
-                        <div class="card-body">
-                            ${rows}
-                            <div class="list-item" style="border-top: 1px dashed #30363d; margin-top: 5px; padding-top: 10px; font-weight:bold">
-                                <span>Total</span>
-                                <span class="green">+$${setup.totalExpectedProfit.toFixed(2)}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+  if (!data.setups || data.setups.length === 0) {
+    container.innerHTML = '<div class="empty-state">No active operations.</div>';
+    return;
+  }
 
-        async function init() {
-            // Render static data first (fast load)
-            render(staticData);
+  data.setups.forEach(setup => {
+    const dirClass = setup.direction === 'BUY' ? 'bg-green' : 'bg-red';
+    
+    // Grid List
+    const levelsHtml = setup.levels.map(lvl => `
+      <li class="grid-item">
+        <div class="grid-left">
+          <div>
+            <span class="id-badge">#${lvl.displayId || '?'}</span>
+            <span class="level-name">${lvl.name}</span>
+          </div>
+          <span class="level-detail">${lvl.vol} lots @ ${lvl.price} (TP: ${lvl.tp})</span>
+        </div>
+        <div class="grid-right">
+          <div class="profit-val">${lvl.expectedProfit >= 0 ? '+' : ''}$${lvl.expectedProfit.toFixed(2)}</div>
+          <span class="status-badge">${lvl.status}</span>
+        </div>
+      </li>
+    `).join('');
 
-            // Try to fetch live data
-            try {
-                const res = await fetch('trades.json?t=' + Date.now());
-                if (res.ok) {
-                    const liveData = await res.json();
-                    render(liveData);
-                }
-            } catch (e) {
-                console.warn("Live fetch failed, using static data");
-            }
-        }
+    const card = `
+      <div class="setup-card">
+        <div class="setup-header">
+          <div>
+            <span class="pair-name">${setup.pair}</span>
+            <span class="badge ${dirClass}">${setup.direction}</span>
+          </div>
+          <div style="font-size:11px; color:var(--dim)">${setup.strategy}</div>
+        </div>
+        
+        <div class="setup-body">
+          <div class="setup-meta">
+            <div class="meta-item"><label>Origin</label><val>${setup.origin}</val></div>
+            <div class="meta-item"><label>Status</label><val>${setup.status}</val></div>
+            <div class="meta-item"><label>Total Size</label><val>${setup.baseLot}</val></div>
+            <div class="meta-item"><label>Potential</label><val class="green">+$${setup.totalExpectedProfit.toFixed(2)}</val></div>
+          </div>
 
-        init();
-        setInterval(init, 10000);
-    </script>
+          <ul class="grid-list">
+            ${levelsHtml}
+          </ul>
+          
+          <div class="total-row">
+            <span>Total Potential Profit</span>
+            <span class="green">+$${setup.totalExpectedProfit.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+    container.innerHTML += card;
+  });
+}
+
+loadData();
+setInterval(loadData, 10000);
+</script>
+
 </body>
 </html>
