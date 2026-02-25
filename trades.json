@@ -12,14 +12,14 @@
       "id": "echo-fiber-sell-20260225-118318-warm",
       "pair": "EURUSD",
       "direction": "SELL",
-      "strategy": "Echo Grid",
+      "strategy": "Echo Grid #10",
       "origin": "1.18318",
       "baseLot": "0.38 (Warm)",
       "status": "Pending",
       "totalExpectedProfit": 122.9,
       "levels": [
         {
-          "displayId": "F-1",
+          "displayId": "67",
           "name": "+3 pips (Scout)",
           "price": 1.18348,
           "vol": 0.02,
@@ -29,7 +29,7 @@
           "orderId": 2894591
         },
         {
-          "displayId": "F-2",
+          "displayId": "68",
           "name": "Origin",
           "price": 1.18318,
           "vol": 0.06,
@@ -39,7 +39,7 @@
           "orderId": 2894592
         },
         {
-          "displayId": "F-3",
+          "displayId": "69",
           "name": "+2 pips",
           "price": 1.18338,
           "vol": 0.07,
@@ -49,7 +49,7 @@
           "orderId": 2894593
         },
         {
-          "displayId": "F-4",
+          "displayId": "70",
           "name": "+4 pips",
           "price": 1.18358,
           "vol": 0.09,
@@ -59,7 +59,7 @@
           "orderId": 2894594
         },
         {
-          "displayId": "F-5",
+          "displayId": "71",
           "name": "+6 pips",
           "price": 1.18378,
           "vol": 0.04,
@@ -69,7 +69,7 @@
           "orderId": 2894595
         },
         {
-          "displayId": "F-6",
+          "displayId": "72",
           "name": "+7 pips",
           "price": 1.18388,
           "vol": 0.02,
@@ -79,7 +79,7 @@
           "orderId": 2894596
         },
         {
-          "displayId": "F-7",
+          "displayId": "73",
           "name": "+10 pips",
           "price": 1.18418,
           "vol": 0.03,
@@ -89,7 +89,7 @@
           "orderId": 2894597
         },
         {
-          "displayId": "F-8",
+          "displayId": "74",
           "name": "+13 pips",
           "price": 1.18448,
           "vol": 0.03,
@@ -99,7 +99,7 @@
           "orderId": 2894598
         },
         {
-          "displayId": "F-9",
+          "displayId": "75",
           "name": "+16 pips",
           "price": 1.18478,
           "vol": 0.02,
@@ -109,7 +109,7 @@
           "orderId": 2894599
         },
         {
-          "displayId": "F-10",
+          "displayId": "76",
           "name": "+19 pips (OF)",
           "price": 1.18508,
           "vol": 0.04,
@@ -119,7 +119,7 @@
           "orderId": 2894600
         },
         {
-          "displayId": "F-11",
+          "displayId": "77",
           "name": "+22 pips (OF)",
           "price": 1.18538,
           "vol": 0.04,
@@ -129,7 +129,7 @@
           "orderId": 2894601
         },
         {
-          "displayId": "F-12",
+          "displayId": "78",
           "name": "+25 pips (OF)",
           "price": 1.18568,
           "vol": 0.04,
@@ -139,7 +139,7 @@
           "orderId": 2894602
         },
         {
-          "displayId": "F-13",
+          "displayId": "79",
           "name": "+28 pips (OF)",
           "price": 1.18598,
           "vol": 0.04,
@@ -149,7 +149,7 @@
           "orderId": 2894603
         },
         {
-          "displayId": "F-14",
+          "displayId": "80",
           "name": "+31 pips (OF)",
           "price": 1.18628,
           "vol": 0.03,
@@ -158,7 +158,8 @@
           "status": "Pending",
           "orderId": 2894604
         }
-      ]
+      ],
+      "groupNumber": 10
     },
     {
       "id": "open-positions-20260220",
