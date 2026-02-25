@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T07:24:12Z",
+  "updatedAt": "2026-02-25T03:45:46Z",
   "stats": {
     "dailyPnl": 24.8,
     "balance": 297.09,
@@ -8,6 +8,158 @@
     "status": "ACTIVE"
   },
   "setups": [
+    {
+      "id": "echo-fiber-sell-20260225-118318-warm",
+      "pair": "EURUSD",
+      "direction": "SELL",
+      "strategy": "Echo Grid",
+      "origin": "1.18318",
+      "baseLot": "0.38 (Warm)",
+      "status": "Pending",
+      "totalExpectedProfit": 122.9,
+      "levels": [
+        {
+          "displayId": "F-1",
+          "name": "+3 pips (Scout)",
+          "price": 1.18348,
+          "vol": 0.02,
+          "tp": 1.18258,
+          "expectedProfit": 1.8,
+          "status": "Pending",
+          "orderId": 2894591
+        },
+        {
+          "displayId": "F-2",
+          "name": "Origin",
+          "price": 1.18318,
+          "vol": 0.06,
+          "tp": 1.18258,
+          "expectedProfit": 3.6,
+          "status": "Pending",
+          "orderId": 2894592
+        },
+        {
+          "displayId": "F-3",
+          "name": "+2 pips",
+          "price": 1.18338,
+          "vol": 0.07,
+          "tp": 1.18228,
+          "expectedProfit": 7.7,
+          "status": "Pending",
+          "orderId": 2894593
+        },
+        {
+          "displayId": "F-4",
+          "name": "+4 pips",
+          "price": 1.18358,
+          "vol": 0.09,
+          "tp": 1.18228,
+          "expectedProfit": 11.7,
+          "status": "Pending",
+          "orderId": 2894594
+        },
+        {
+          "displayId": "F-5",
+          "name": "+6 pips",
+          "price": 1.18378,
+          "vol": 0.04,
+          "tp": 1.18228,
+          "expectedProfit": 6.0,
+          "status": "Pending",
+          "orderId": 2894595
+        },
+        {
+          "displayId": "F-6",
+          "name": "+7 pips",
+          "price": 1.18388,
+          "vol": 0.02,
+          "tp": 1.18228,
+          "expectedProfit": 3.2,
+          "status": "Pending",
+          "orderId": 2894596
+        },
+        {
+          "displayId": "F-7",
+          "name": "+10 pips",
+          "price": 1.18418,
+          "vol": 0.03,
+          "tp": 1.18228,
+          "expectedProfit": 5.7,
+          "status": "Pending",
+          "orderId": 2894597
+        },
+        {
+          "displayId": "F-8",
+          "name": "+13 pips",
+          "price": 1.18448,
+          "vol": 0.03,
+          "tp": 1.18228,
+          "expectedProfit": 6.6,
+          "status": "Pending",
+          "orderId": 2894598
+        },
+        {
+          "displayId": "F-9",
+          "name": "+16 pips",
+          "price": 1.18478,
+          "vol": 0.02,
+          "tp": 1.18228,
+          "expectedProfit": 5.0,
+          "status": "Pending",
+          "orderId": 2894599
+        },
+        {
+          "displayId": "F-10",
+          "name": "+19 pips (OF)",
+          "price": 1.18508,
+          "vol": 0.04,
+          "tp": 1.18188,
+          "expectedProfit": 12.8,
+          "status": "Pending",
+          "orderId": 2894600
+        },
+        {
+          "displayId": "F-11",
+          "name": "+22 pips (OF)",
+          "price": 1.18538,
+          "vol": 0.04,
+          "tp": 1.18188,
+          "expectedProfit": 14.0,
+          "status": "Pending",
+          "orderId": 2894601
+        },
+        {
+          "displayId": "F-12",
+          "name": "+25 pips (OF)",
+          "price": 1.18568,
+          "vol": 0.04,
+          "tp": 1.18188,
+          "expectedProfit": 15.2,
+          "status": "Pending",
+          "orderId": 2894602
+        },
+        {
+          "displayId": "F-13",
+          "name": "+28 pips (OF)",
+          "price": 1.18598,
+          "vol": 0.04,
+          "tp": 1.18188,
+          "expectedProfit": 16.4,
+          "status": "Pending",
+          "orderId": 2894603
+        },
+        {
+          "displayId": "F-14",
+          "name": "+31 pips (OF)",
+          "price": 1.18628,
+          "vol": 0.03,
+          "tp": 1.18188,
+          "expectedProfit": 13.2,
+          "status": "Pending",
+          "orderId": 2894604
+        }
+      ]
+    },
     {
       "id": "open-positions-20260220",
       "pair": "EURUSD",
