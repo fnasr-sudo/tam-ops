@@ -1,13 +1,185 @@
 {
-  "updatedAt": "2026-02-25T03:45:46Z",
+  "updatedAt": "2026-02-26T15:41:50Z",
   "stats": {
-    "dailyPnl": 24.8,
-    "balance": 297.09,
-    "equity": 321.89,
-    "totalLots": 0.3,
+    "dailyPnl": -85.38,
+    "balance": 687.83,
+    "equity": 602.45,
+    "totalLots": 0.65,
     "status": "ACTIVE"
   },
   "setups": [
+    {
+      "id": "open-positions-live",
+      "pair": "EURUSD",
+      "direction": "BUY",
+      "strategy": "Live Positions Snapshot",
+      "origin": "Various",
+      "baseLot": "0.65",
+      "status": "Open",
+      "totalExpectedProfit": -85.38,
+      "levels": [
+        {
+          "displayId": "1",
+          "name": "Pos 1 (2897610)",
+          "price": 1.18204,
+          "vol": 0.05,
+          "tp": 0,
+          "expectedProfit": -14.9,
+          "status": "Open",
+          "orderId": "2897610"
+        },
+        {
+          "displayId": "2",
+          "name": "Pos 2 (2897852)",
+          "price": 1.18133,
+          "vol": 0.05,
+          "tp": 0,
+          "expectedProfit": -11.35,
+          "status": "Open",
+          "orderId": "2897852"
+        },
+        {
+          "displayId": "3",
+          "name": "Pos 3 (2897859)",
+          "price": 1.18144,
+          "vol": 0.05,
+          "tp": 0,
+          "expectedProfit": -11.9,
+          "status": "Open",
+          "orderId": "2897859"
+        },
+        {
+          "displayId": "4",
+          "name": "Pos 4 (2897996)",
+          "price": 1.18172,
+          "vol": 0.05,
+          "tp": 0,
+          "expectedProfit": -13.3,
+          "status": "Open",
+          "orderId": "2897996"
+        },
+        {
+          "displayId": "5",
+          "name": "Pos 5 (2898053)",
+          "price": 1.18054,
+          "vol": 0.05,
+          "tp": 0,
+          "expectedProfit": -7.4,
+          "status": "Open",
+          "orderId": "2898053"
+        },
+        {
+          "displayId": "6",
+          "name": "Pos 6 (2898058)",
+          "price": 1.18057,
+          "vol": 0.05,
+          "tp": 0,
+          "expectedProfit": -7.55,
+          "status": "Open",
+          "orderId": "2898058"
+        },
+        {
+          "displayId": "7",
+          "name": "Pos 7 (2900330)",
+          "price": 1.18008,
+          "vol": 0.05,
+          "tp": 0,
+          "expectedProfit": -5.1,
+          "status": "Open",
+          "orderId": "2900330"
+        },
+        {
+          "displayId": "8",
+          "name": "Pos 8 (2900335)",
+          "price": 1.17999,
+          "vol": 0.04,
+          "tp": 1.1806,
+          "expectedProfit": -3.72,
+          "status": "Open",
+          "orderId": "2900335"
+        },
+        {
+          "displayId": "9",
+          "name": "Pos 9 (2900336)",
+          "price": 1.17979,
+          "vol": 0.06,
+          "tp": 1.1809,
+          "expectedProfit": -4.38,
+          "status": "Open",
+          "orderId": "2900336"
+        },
+        {
+          "displayId": "10",
+          "name": "Pos 10 (2900337)",
+          "price": 1.17958,
+          "vol": 0.08,
+          "tp": 1.1809,
+          "expectedProfit": -4.16,
+          "status": "Open",
+          "orderId": "2900337"
+        },
+        {
+          "displayId": "11",
+          "name": "Pos 11 (2900338)",
+          "price": 1.17938,
+          "vol": 0.03,
+          "tp": 1.1809,
+          "expectedProfit": -0.96,
+          "status": "Open",
+          "orderId": "2900338"
+        },
+        {
+          "displayId": "12",
+          "name": "Pos 12 (2900339)",
+          "price": 1.17924,
+          "vol": 0.02,
+          "tp": 1.1809,
+          "expectedProfit": -0.36,
+          "status": "Open",
+          "orderId": "2900339"
+        },
+        {
+          "displayId": "13",
+          "name": "Pos 13 (2900340)",
+          "price": 1.17899,
+          "vol": 0.02,
+          "tp": 1.1809,
+          "expectedProfit": 0.14,
+          "status": "Open",
+          "orderId": "2900340"
+        },
+        {
+          "displayId": "14",
+          "name": "Pos 14 (2900341)",
+          "price": 1.17868,
+          "vol": 0.02,
+          "tp": 1.1809,
+          "expectedProfit": 0.76,
+          "status": "Open",
+          "orderId": "2900341"
+        },
+        {
+          "displayId": "15",
+          "name": "Pos 15 (2900342)",
+          "price": 1.1784,
+          "vol": 0.01,
+          "tp": 1.1809,
+          "expectedProfit": 0.66,
+          "status": "Open",
+          "orderId": "2900342"
+        },
+        {
+          "displayId": "16",
+          "name": "Pos 16 (2900349)",
+          "price": 1.17999,
+          "vol": 0.02,
+          "tp": 1.1806,
+          "expectedProfit": -1.86,
+          "status": "Open",
+          "orderId": "2900349"
+        }
+      ]
+    },
     {
       "id": "echo-fiber-sell-20260225-118318-warm",
       "pair": "EURUSD",
